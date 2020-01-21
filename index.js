@@ -27,9 +27,16 @@ const machine = createMachine({
             },
         },
         // Each state can define events that trigger a transition.
+        // A transition defines how a machine would react to the event, by exiting one state and entering another state.
         transitions: {
             // The off state should be able to transition to the on state and so I will call that event "switch"
-            switch: {},
+            switch: {
+                target: 'on',
+                // A transition can define actions that occur when the transition happens. Actions will typically have side effects.
+                action() {
+                    console.log('transition action for "switch" in "off" state')
+                }
+            },
         },
     },
     on: {
@@ -42,7 +49,12 @@ const machine = createMachine({
             },
         },
         transitions: {
-            switch: {},
+            switch: {
+                target: 'off',
+                action() {
+                    console.log('transition action for "switch" in "on" state')
+                }
+            },
         },
     },
 })
